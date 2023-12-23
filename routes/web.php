@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('test', function () {
+    return bcrypt('1234');
+});
 Route::get('/', function () {
     return view('welcome');
 })->middleware('auth');
