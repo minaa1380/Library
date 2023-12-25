@@ -232,7 +232,7 @@ Like: www.facebook.com/keenthemes
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                                     <div data-key="0" class="menu-item">
-                                        <a class="menu-link" href="">
+                                        <a class="menu-link" href="{{ route('config.index') }}">
                                             <span class="menu-bullet"></span>
                                             <span class="menu-icon">
                                                 <span class="fas fa-money"></span>

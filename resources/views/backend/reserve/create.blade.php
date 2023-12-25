@@ -14,8 +14,8 @@
                 <form id="main_form" class="form" method="post" action="{{ route('reserve.store') }}"
                     enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="user_id">
-                    <input type="hidden" name="book_id">
+                    <input type="hidden" name="user_id" id="user_id">
+                    <input type="hidden" name="book_id" id="book_id">
                     <div id="user_create_inputs">
                         <div class="row row-cols-1 row-cols-sm-3 rol-cols-md-1 row-cols-lg-3">
                             <div class="col">
@@ -65,10 +65,9 @@
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
                     </div>
+                </form>
             </div>
-            </form>
         </div>
-    </div>
     </div>
     <!--end::Content-->
 @endsection
@@ -82,5 +81,4 @@
         let selectedManager = null;
     </script>
     <script src="{{ asset('js/library/reserve/create.js') }}"></script>
-
 @endsection

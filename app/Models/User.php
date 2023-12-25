@@ -50,6 +50,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function getFullname(){
+        return $this->name . ' ' . $this->family;
+    }
+
     public function getStatus()
     {
         if ($this->status == null)

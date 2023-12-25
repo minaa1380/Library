@@ -23,10 +23,10 @@
                     </div>
                     <div class="card-toolbar">
                         <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
-                            <a href="{{ route('books.create') }}">
+                            <a href="{{ route('reserve.create') }}">
                                 <button type="button" class="btn btn-primary">
                                     <i class="fas fa-book-medical"></i>
-                                    افزودن کتاب جدید</button>
+                                    رزرو جدید</button>
                             </a>
                         </div>
                         <div class="d-flex justify-content-end align-items-center d-none"
@@ -42,7 +42,7 @@
                 </div>
                 <div class="card-body pt-0">
                     <div id="table">
-                        @include('backend.books.partial')
+                        @include('backend.reserve.partial')
                     </div>
                 </div>
             </div>
@@ -50,10 +50,11 @@
     </div>
 @endsection
 @section('script')
-    <script src="{{ asset('js/library/books/index.js') }}"></script>
+    <script src="{{ asset('js/library/reserve/index.js') }}"></script>
     <script>
         let token = "{{ csrf_token() }}";
         main_id = 5, sub_id = 1;
+        let search_url = "{{ route('reserve.search') }}";
 
         @if (Session::exists('status'))
             Swal.fire({
