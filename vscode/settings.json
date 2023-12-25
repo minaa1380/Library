@@ -1,3 +1,9 @@
 {
+    "workbench.colorTheme": "Eva Dark Italic",
+    "css.enabledLanguages": [
+        "blade" , "css" ,
+        "html"
+    ],
     "editor.fontSize": 18
+
 }
