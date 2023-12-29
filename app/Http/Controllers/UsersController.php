@@ -33,6 +33,14 @@ class UsersController extends Controller
         if ($validator->fails())
             return redirect()->back()->withErrors($validator->errors());
 
+        $imageName = null;
+        if ($request->has('pic')) {
+            $image = $request->file('pic');
+            $image_path = public_path('images\users\\');
+            $imageName = time() . '.png';
+            $image->move($image_path, $imageName);
+        }
+
         $data = [
             'name' => $request->name,
             'family' => $request->family,
@@ -40,6 +48,8 @@ class UsersController extends Controller
             'password' => bcrypt($request->username),
             'user_type' => $request->user_type,
             'expire_date' => Carbon::now()->addYear()->toDate(),
+            'membershipID' => $this->generateMembershipID(),
+            'pic' => $imageName
         ];
 
         try {
@@ -68,11 +78,20 @@ class UsersController extends Controller
         if ($validator->fails())
             return redirect()->back()->withErrors($validator->errors());
 
+        $imageName = null;
+        if ($request->has('pic')) {
+            $image = $request->file('pic');
+            $image_path = public_path('images\users\\');
+            $imageName = time() . '.png';
+            $image->move($image_path, $imageName);
+        }
+
         $data = [
             'name' => $request->name,
             'family' => $request->family,
             'username' => $request->username,
             'user_type' => $request->user_type,
+            'pic' => $imageName
         ];
 
         try {
@@ -99,5 +118,8 @@ class UsersController extends Controller
             ->get();
     }
 
-    public function generateMembershipID(){}
+    private function generateMembershipID()
+    {
+        return 'USR-' . now();
+    }
 }

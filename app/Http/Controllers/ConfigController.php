@@ -18,12 +18,21 @@ class ConfigController extends Controller
     public function store(Request $request)
     {
         try {
+
+            $imageName = null;
+            if ($request->has('logo')) {
+                $image = $request->file('logo');
+                $image_path = public_path('imagesS\\');
+                $imageName = 'logo.png';
+                $image->move($image_path, $imageName);
+            }
             $data = [
                 'app_name' => $request->name,
                 'penalty_for_day' => str_replace(',', '', $request->penalty_for_day),
                 'register_cost' => str_replace(',', '', $request->register_cost),
                 'update_cost' => str_replace(',', '', $request->update_cost),
-                'max_user_reserve' => $request->max_user_reserve,
+                'max_user_reserve' => $request->max_user_reserve, 
+                'logo' => $imageName
             ];
 
             Config::updateOrCreate(['id' => 1], $data);
