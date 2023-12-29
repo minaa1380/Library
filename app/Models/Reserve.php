@@ -39,7 +39,7 @@ class Reserve extends Model
                 return $deliveryDate->diffInDays(Carbon::now(), CarbonInterface::DIFF_ABSOLUTE) . ' روز گذشته';
         }
 
-        return verta($this->reserve_date)->formatDate();
+        return verta($this->delivery_date)->formatDate();
     }
     public function getPenalty()
     {

@@ -11,7 +11,8 @@
                 </div>
             </div>
             <div class="card-body pt-5">
-                <form id="main_form" class="form" method="post" action="{{ route('users.store') }}">
+                <form id="main_form" class="form" method="post" action="{{ route('users.store') }}"
+                    enctype="multipart/form-data">
                     @csrf
                     <div id="user_create_inputs">
                         <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
@@ -22,8 +23,8 @@
                                         <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
                                             title="نام کاربر (اجباری)"></i>
                                     </label>
-                                    <input type="text" class="form-control form-control-solid" name="name" id="name"
-                                        value="" />
+                                    <input type="text" class="form-control form-control-solid" name="name"
+                                        id="name" value="" />
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
                             </div>
@@ -34,8 +35,8 @@
                                         <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
                                             title="نام خانوادگی (اجباری)"></i>
                                     </label>
-                                    <input type="text" class="form-control form-control-solid" name="family" id="family"
-                                        value="" />
+                                    <input type="text" class="form-control form-control-solid" name="family"
+                                        id="family" value="" />
                                     <div class="fv-plugins-message-container invalid-feedback"></div>
                                 </div>
                             </div>
@@ -86,8 +87,7 @@
                                 <button type="button" data-kt-contacts-type="cancel"
                                     class="btn btn-light me-3">انصراف</button>
                             </a>
-                            <button id="form_submit" type="button" data-kt-contacts-type="submit"
-                                class="btn btn-primary">
+                            <button id="form_submit" type="button" data-kt-contacts-type="submit" class="btn btn-primary">
                                 <span class="indicator-label">ذخیره</span>
                                 <span class="indicator-progress">لطفا صبر کنید...
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -101,5 +101,5 @@
     <!--end::Content-->
 @endsection
 @section('script')
-<script src="{{ asset('js/library/users/create.js') }}"></script>
+    <script src="{{ asset('js/library/users/create.js') }}"></script>
 @endsection

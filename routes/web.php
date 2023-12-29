@@ -5,8 +5,11 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReserveController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsersController;
+use App\Models\Config;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +22,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('test', function () {
-    if (1)
-        return 'ok';
-    // return bcrypt('1234');
-});
+Route::get('/panel',[UserController::class, 'index'])->middleware('auth')->name('panel');
+Route::get('/check',[UserController::class, 'check'])->middleware('auth');
 Route::get('/', function () {
     return view('welcome');
 })->middleware('auth');
@@ -37,9 +37,9 @@ Route::get('/book/{id}/reserve', [BooksController::class, 'reserve'])->name('boo
 Route::post('/users/search/json', [UsersController::class, 'searchJson'])->name('users.search.json');
 Route::post('/books/search/json', [BooksController::class, 'searchJson'])->name('books.search.json');
 Route::resource('/reserve', ReserveController::class)->except(['show'])->middleware('auth');
-Route::get('/reserve/delivery/{id}', [ReserveController::class , 'delivery'])->middleware('auth')->name('reserve.delivery');
-Route::get('/config', [ConfigController::class , 'index'])->middleware('auth')->name('config.index');
-Route::post('/config/store', [ConfigController::class , 'store'])->middleware('auth')->name('config.store');
+Route::get('/reserve/delivery/{id}', [ReserveController::class, 'delivery'])->middleware('auth')->name('reserve.delivery');
+Route::get('/config', [ConfigController::class, 'index'])->middleware('auth')->name('config.index');
+Route::post('/config/store', [ConfigController::class, 'store'])->middleware('auth')->name('config.store');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

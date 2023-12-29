@@ -62,8 +62,8 @@ Like: www.facebook.com/keenthemes
                 <!--begin::Brو-->
                 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                     <!--begin::Logo-->
-                    <a href="">
-                        <img alt="Logo" src="{{ asset('asset/back/metronic/media/logos/logo-1.svg') }}"
+                    <a>
+                        <img alt="Logo" src="{{ asset('images/logo.png') }}"
                             class="h-25px logo" />
                     </a>
                     <!--end::Logo-->
@@ -221,7 +221,7 @@ Like: www.facebook.com/keenthemes
                                     <span class="menu-title">دسته بندی ها</span>
                                 </a>
                             </div>
-                            
+
                             <div data-key="19" data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                 <span class="menu-link">
                                     <span class="menu-icon">
@@ -278,17 +278,18 @@ Like: www.facebook.com/keenthemes
                         <!--end::کناری mobile toggle-->
                         <!--begin::Mobile logo-->
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                            <a href="../../demo1/dist/index.html" class="d-lg-none">
-                                <img alt="Logo" src="assets/media/logos/logo-2.svg" class="h-30px" />
+                            <a class="d-lg-none">
+                                <img alt="Logo" src="{{ asset('images/logo.png') }}" class="h-30px" />
                             </a>
                         </div>
                         <div class="d-flex align-items-stretch justify-content-end flex-lg-grow-1">
                             <div class="d-flex align-items-stretch flex-shrink-0">
                                 <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
-                                    <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
+                                    <div class="cursor-pointer symbol symbol-60px symbol-md-80px"
                                         data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                                         data-kt-menu-placement="bottom-end">
-                                        <img src="{{ asset('image/users/1.png') }}" alt="user" />
+                                        <img class="img m-2 rounded-4"
+                                            src="{{ asset('images/users/' . Auth::user()->pic) }}" alt="user" />
                                     </div>
                                     <!--begin::کاربر account menu-->
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
@@ -299,18 +300,17 @@ Like: www.facebook.com/keenthemes
                                                 <!--begin::Avatar-->
                                                 <div class="symbol symbol-50px me-5">
                                                     <img alt="Logo"
-                                                        src="{{ asset('image/users/1.png') }}" />
+                                                        src="{{ asset('images/users/' . Auth::user()->pic) }}" />
                                                 </div>
                                                 <!--end::Avatar-->
                                                 <!--begin::کاربرname-->
                                                 <div class="d-flex flex-column">
                                                     <div class="fw-bolder d-flex align-items-center fs-5">
-                                                        {{-- {{ Auth::user()->getFullName() }} --}}
+                                                        {{ Auth::user()->getFullName() }}
                                                     </div>
-                                                    <a href="#"
-                                                        class="fw-bold text-muted text-hover-primary fs-7">
-                                                        {{-- {{ auth()->user()->mobile }} --}}
-                                                    </a>
+                                                    <span class="fw-bold text-muted text-hover-primary fs-7">
+                                                        #{{ Auth::user()->membershipID }}
+                                                    </span>
                                                 </div>
                                                 <!--end::کاربرname-->
                                             </div>
@@ -319,8 +319,8 @@ Like: www.facebook.com/keenthemes
                                         <!--begin::Menu separator-->
                                         <div class="separator my-2"></div>
                                         <!--begin::Menu item-->
-                                        <div class="menu-item px-5" onclick="$(this).find('form').submit();">
-                                            <form method="post" action="">
+                                        <div id="exit" class="menu-item px-5">
+                                            <form method="post" action="{{ route('logout') }}">
                                                 @csrf
                                                 <a class="menu-link px-5">خروج</a>
                                             </form>
@@ -329,21 +329,6 @@ Like: www.facebook.com/keenthemes
                                         <!--begin::Menu separator-->
                                         <div class="separator my-2"></div>
                                         <!--end::Menu separator-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item px-5">
-                                            <div class="menu-content px-5">
-                                                <label
-                                                    class="form-check form-switch form-check-custom form-check-solid pulse pulse-success"
-                                                    for="kt_user_menu_dark_mode_toggle">
-                                                    <input class="form-check-input w-30px h-20px" type="checkbox"
-                                                        value="1" name="mode"
-                                                        id="kt_user_menu_dark_mode_toggle" />
-                                                    <span class="pulse-ring ms-n1"></span>
-                                                    <span class="form-check-label text-gray-600 fs-7">باز بودن</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <!--end::Menu item-->
                                     </div>
                                     <!--end::کاربر account menu-->
                                     <!--end::Menu wrapper-->
@@ -436,6 +421,27 @@ Like: www.facebook.com/keenthemes
         @endif
 
         $(document).ready(function() {
+
+            $(document).on('click', '#exit', function() {
+                Swal.fire({
+                    html: `آیا میخواهید خارج شوید ؟`,
+                    icon: "error",
+                    buttonsStyling: false,
+                    showCancelButton: true,
+                    showConfirmButton: true,
+                    confirmButtonText: "بله",
+                    cancelButtonText: 'خیر',
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                        cancelButton: 'btn btn-danger'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(this).find('form').submit();
+                    }
+                });
+            });
+
             var main_item = $('div.menu-accordion[data-key=' + main_id + ']');
             main_item.addClass('show hover');
             if (sub_id != -1)

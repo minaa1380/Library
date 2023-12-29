@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="card-body pt-5">
-                <form id="main_form" class="form" method="post" action="{{ route('users.update' , $user->id) }}">
+                <form id="main_form" class="form" method="post" action="{{ route('users.update' , $user->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <div id="user_create_inputs">

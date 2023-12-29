@@ -49,15 +49,20 @@ Like: www.facebook.com/keenthemes
 						<div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
 							<!--begin::Logo-->
 							<a href="../../demo1/dist/index.html" class="py-9 mb-5">
-								<img alt="Logo" src="{{ asset('media/logos/logo-2.svg') }}" class="h-60px" />
+								<img alt="Logo" src="{{ asset('images/logo.png') }}" class="h-60px" />
 							</a>
 							<!--end::Logo-->
 							<!--begin::Title-->
-							<h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">به مترونیک خوش آمدید</h1>
+							<h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">
+								به سامانه {{ $config->app_name }} خوش آمدید
+							</h1>
 							<!--end::Title-->
 							<!--begin::توضیحات-->
-							<p class="fw-bold fs-2" style="color: #986923;">کشف شگفت انگیز مترونیک
-							<br />با ابزار ساخت عالی</p>
+							<p class="fw-bold fs-2" style="color: #986923;">
+								رزرو سریع کتب
+							<br />
+								براحتی هرچه تمام ، کتب و کاربران را مدیریت کن 
+						</p>
 							<!--end::توضیحات-->
 						</div>
 						<!--end::Content-->
@@ -106,9 +111,6 @@ Like: www.facebook.com/keenthemes
 										<!--begin::Tags-->
 										<label class="form-label fw-bolder text-dark fs-6 mb-0">کلمه عبور</label>
 										<!--end::Tags-->
-										<!--begin::Link-->
-										<a href="../../demo1/dist/authentication/layouts/aside/password-reset.html" class="link-primary fs-6 fw-bolder">فراموشی رمز?</a>
-										<!--end::Link-->
 									</div>
 									<!--end::Wrapper-->
 									<!--begin::Input-->
