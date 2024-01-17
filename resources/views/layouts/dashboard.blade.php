@@ -28,7 +28,7 @@ Like: www.facebook.com/keenthemes
     <meta property="og:url" content="https://keenthemes.com/metronic" />
     <meta property="og:site_name" content="ساتراس وب | مترونیک" />
     <link rel="canonical" href="Https://preview.keenthemes.com/metronic8" />
-    <link rel="shortcut icon" href="{{ asset('image/icons/baner2.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" />
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Page Vendor Stylesheets-->
@@ -63,8 +63,7 @@ Like: www.facebook.com/keenthemes
                 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                     <!--begin::Logo-->
                     <a>
-                        <img alt="Logo" src="{{ asset('images/logo.png') }}"
-                            class="h-25px logo" />
+                        <img alt="Logo" src="{{ asset('images/logo.png') }}" class="h-25px logo" />
                     </a>
                     <!--end::Logo-->
                     <!--begin::کناری toggler-->
@@ -319,6 +318,9 @@ Like: www.facebook.com/keenthemes
                                         <!--begin::Menu separator-->
                                         <div class="separator my-2"></div>
                                         <!--begin::Menu item-->
+                                        <div class="menu-item px-5">
+                                            <a href="{{ route('profile.index') }}" class="menu-link px-5">پروفایل</a>
+                                        </div>
                                         <div id="exit" class="menu-item px-5">
                                             <form method="post" action="{{ route('logout') }}">
                                                 @csrf
