@@ -33,7 +33,7 @@
     <div class="row">
         <div class="col-4">
             <div class="card shadow-sm">
-                <a href="">
+                <a href="{{ route('panel.books.index') }}">
                     <div class="card-body img-item m-8"
                         style="background-image: url({{ asset('images/icons/book-search.svg') }});">
                     </div>

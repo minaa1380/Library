@@ -16,10 +16,9 @@
             </div>
         </div>
         <div class="card-body pt-5">
-            <form id="main_form" class="form" method="post" action="{{ route('users.update', $user->id) }}"
+            <form id="main_form" class="form" method="post" action="{{ route('myProfile.update') }}"
                 enctype="multipart/form-data">
                 @csrf
-                @method('PATCH')
                 <div id="user_create_inputs">
                     <div class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2">
                         <div class="col">

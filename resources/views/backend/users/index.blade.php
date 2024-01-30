@@ -92,31 +92,32 @@
                 </div>
             </div>
         </div>
-        <!-- Reserve Modal -->
-    @endsection
-    @section('script')
-        <script src="{{ asset('js/library/users/index.js') }}"></script>
-        <script>
-            let token = "{{ csrf_token() }}";
-            let book_search_url = "{{ route('books.search') }}";
-            main_id = 5, sub_id = 1;
+    </div>
+    <!-- Reserve Modal -->
+@endsection
+@section('script')
+    <script src="{{ asset('js/library/users/index.js') }}"></script>
+    <script>
+        let token = "{{ csrf_token() }}";
+        let book_search_url = "{{ route('books.search') }}";
+        main_id = 5, sub_id = 1;
 
-            @if (Session::exists('status'))
-                Swal.fire({
-                    html: `{{ Session::get('status')['message'] }}`,
-                    icon: @if (Session::pull('status')['status'] == 200)
-                        "success"
-                    @else
-                        "error"
-                    @endif ,
-                    buttonsStyling: false,
-                    showCancelButton: true,
-                    showConfirmButton: false,
-                    cancelButtonText: "باشه",
-                    customClass: {
-                        cancelButton: "btn btn-primary",
-                    }
-                });
-            @endif
-        </script>
-    @endsection
+        @if (Session::exists('status'))
+            Swal.fire({
+                html: `{{ Session::get('status')['message'] }}`,
+                icon: @if (Session::pull('status')['status'] == 200)
+                    "success"
+                @else
+                    "error"
+                @endif ,
+                buttonsStyling: false,
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonText: "باشه",
+                customClass: {
+                    cancelButton: "btn btn-primary",
+                }
+            });
+        @endif
+    </script>
+@endsection

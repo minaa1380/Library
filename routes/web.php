@@ -3,6 +3,7 @@
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\Frontend\BooksController as FrontendBooksController;
 use App\Http\Controllers\Frontend\ProfileController as FrontendProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReserveController;
@@ -24,13 +25,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/panel', [UserController::class, 'index'])->middleware('auth')->name('panel');
-Route::get('/check', [UserController::class, 'check'])->middleware('auth');
+
+Route::group(['prefix' => 'panel'] , function (){
+    Route::get('/books' , [FrontendBooksController::class , 'index'])->name('panel.books.index');
+    Route::post('/books/search' , [FrontendBooksController::class , 'search'])->name('panel.books.search');
+});
+
+Route::get('/', [UserController::class, 'check'])->middleware('auth');
 Route::get('/profile/index', [FrontendProfileController::class, 'index'])->middleware('auth')->name('myProfile.index');
 Route::post('/profile/update', [FrontendProfileController::class, 'update'])->middleware('auth')->name('myProfile.update');
 Route::post('/user/register', [UserController::class, 'store'])->name('user.register');
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::resource('/users', UsersController::class)->except('show');
     Route::resource('/books', BooksController::class)->except('show');

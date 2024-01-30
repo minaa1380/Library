@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
 {
@@ -19,10 +20,11 @@ class ProfileController extends Controller
     {
         try {
             $user = User::find(Auth::id());
-            $user->update($request->except('token'));
-            return true;
-        } catch (QueryException $exception)  {
-            return false;
+            $user->update($request->except(['token', 'confirmPassword', 'password', 'pic']));
+            Session::put('status', ['status' => 200, 'message' => 'پروفایل باموفقیت ویرایش شد.']);
+        } catch (QueryException $exception) {
+            Session::put('status', ['status' => 201, 'message' => 'خطا در ویرایش پروفایل ، مجددا تلاش کنید']);
         }
+        return redirect()->back();
     }
 }
