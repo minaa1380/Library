@@ -60,4 +60,40 @@ $(document).ready(function () {
         });
     }
 
+    $(document).on('click', '.submit-reserve', function (event) {
+
+        var btn = $(this);
+        btn.find('.indicator-label').hide();
+        btn.find('.indicator-progress').show();
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': token
+            },
+            type: 'get',
+            url: $(this).attr('data-link'),
+            success: function (data) {
+                btn.find('.indicator-label').show();
+                btn.find('.indicator-progress').hide();
+                if (data.status == 200) {
+                    toastr.success(data.message);
+                    btn.parent().html(`
+                        <div class="badge badge-danger">
+                            <span>در دست امانت </span>
+                        </div>
+                    `);
+                }
+                else
+                    toastr.error(data.message);
+            },
+            error: function (e) {
+                console.log(e);
+                btn.find('.indicator-label').show();
+                btn.find('.indicator-progress').hide();
+
+            }
+        });
+
+    });
+
 });

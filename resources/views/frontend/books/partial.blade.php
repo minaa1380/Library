@@ -37,11 +37,14 @@
                     <td>
                         <span class="text-gray-600 text-hover-primary mb-1">{{ $item->getStatus() }}</span>
                     </td>
-                    <td class="text-end">
+                    <td class="text-center">
                         @if ($item->status == 0)
-                            <div class="btn btn-sm rounded-pill btn-primary submit-reserve"
+                            <div class="btn btn-sm btn-primary submit-reserve"
                                 data-link="{{ route('books.reserve', $item->id) }}">
-                                <span class="px-3">امانت</span>
+                                <span class="indicator-label">رزرو</span>
+                                <span class="indicator-progress">
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
                             </div>
                         @else
                             <div class="badge badge-danger">

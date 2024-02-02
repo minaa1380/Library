@@ -26,9 +26,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/panel', [UserController::class, 'index'])->middleware('auth')->name('panel');
 
-Route::group(['prefix' => 'panel'] , function (){
-    Route::get('/books' , [FrontendBooksController::class , 'index'])->name('panel.books.index');
-    Route::post('/books/search' , [FrontendBooksController::class , 'search'])->name('panel.books.search');
+Route::group(['prefix' => 'panel', 'middleware' => 'auth'], function () {
+    Route::get('/books', [FrontendBooksController::class, 'index'])->name('panel.books.index');
+    Route::post('/books/search', [FrontendBooksController::class, 'search'])->name('panel.books.search');
 });
 
 Route::get('/', [UserController::class, 'check'])->middleware('auth');

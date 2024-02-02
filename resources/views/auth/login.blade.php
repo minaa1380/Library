@@ -15,7 +15,7 @@ Like: www.facebook.com/keenthemes
 
 <head>
     <base href="../../../">
-    <title>قالب مدیریت مترونیک</title>
+    <title>ورود</title>
     <meta charset="utf-8" />
     <meta name="description"
         content="The most advanced پنل ادمین بوت استراپ Theme on Themeforest trusted by 94,000 beginners و professionals. Multi-demo, حالت تیره, RTL support و complete React, Angular, Vue &amp; Laravel versions. Grab your copy now و get life-time updates for free." />
@@ -93,7 +93,7 @@ Like: www.facebook.com/keenthemes
                             <!--begin::Heading-->
                             <div class="text-center mb-10">
                                 <!--begin::Title-->
-                                <h1 class="text-dark mb-3">ورود به مترونیک</h1>
+                                <h1 class="text-dark mb-3">ورود به سامانه</h1>
                                 <!--end::Title-->
                             </div>
                             <!--begin::Heading-->

@@ -15,11 +15,6 @@
     </style>
 @endsection
 @section('content')
-    {{-- <div class="card mt-8 mb-2">
-        <div class="card-title pt-7 pb-7 m-10 m-auto">
-            <h2 class="text-center m-auto">لیست تمامی کتب کتابخانه</h2>
-        </div>
-    </div> --}}
     <div class="card">
         <div class="card-header pt-5 pb-5">
             <div class="d-flex align-items-center position-relative my-1" style="width: 70%">
