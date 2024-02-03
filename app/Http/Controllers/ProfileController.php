@@ -3,44 +3,58 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+
+    public function index()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
+        return view('backend.profile.index', [
+            'user' => Auth::user(),
         ]);
     }
 
     /**
+     * Display the user's profile form.
+     */
+    /* public function edit(Request $request): View
+    {
+        return view('profile.edit', [
+            'user' => $request->user(),
+        ]);
+    } */
+
+    /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+
+
+    public function update(Request $request)
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        try {
+            $user = User::find(Auth::id());
+            $data = ($request->password == null)? $request->except(['password' , 'confirmPassword' , '_token']):$request->except('_token');
+            $user->update($data);
+            Session::put('status', ['status' => 200, 'message' => 'اطلاعات پروفایل باموفقیت ویرایش شد']);
+            return redirect()->back();
+        } catch (QueryException $exception) {
+            Session::put('status', ['status' => 201, 'message' => 'اطلاعات پروفایل ویرایش نشد، مجددا تلاش کنید']);
+            return redirect()->back();
         }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+    /*     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
@@ -56,5 +70,5 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
-    }
+    } */
 }
