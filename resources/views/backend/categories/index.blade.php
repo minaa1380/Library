@@ -153,9 +153,12 @@
     </div>
 @endsection
 @section('script')
-    <script src="{{ asset('js/library/categories/index.js') }}"></script>
     <script>
         let token = "{{ csrf_token() }}";
+        let search_url = "{{ route('category.search') }}";
+    </script>
+    <script src="{{ asset('js/library/categories/index.js') }}"></script>
+    <script>
         main_id = 5, sub_id = 1;
 
         @if (Session::exists('status'))

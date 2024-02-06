@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class CategoriesController extends Controller
 {
@@ -56,8 +58,25 @@ class CategoriesController extends Controller
     }
     public function destroy($id)
     {
-        if (Category::find($id)->delete())
-            return response()->json(['status' => 200, 'message' => 'دسته بندی باموفقیت حذف شد.']);
-        return response()->json(['status' => 201, 'message' => 'خطا در حذف دسته بندی ، مجددا تلاش کنید..']);
+        if (!$this->checkCategory($id)) {
+            if (Category::find($id)->delete())
+                return response()->json(['status' => 200, 'message' => 'دسته بندی باموفقیت حذف شد.']);
+            return response()->json(['status' => 201, 'message' => 'خطا در حذف دسته بندی ، مجددا تلاش کنید..']);
+        } else
+            return response()->json(['status' => 202, 'message' => 'دسته بندی دارای کتاب میباشد !']);
+    }
+
+    public function search(Request $request)
+    {
+        $query = Category::query();
+        if ($request->has('word'))
+            $query = $query->where('title', 'like', '%' . $request->word . '%')->where('id', '>', 1);
+        $categories = $query->paginate(20);
+        return view('backend.categories.partial', compact('categories'));
+    }
+
+    private function checkCategory($category_id)
+    {
+        return Book::whereCategoryId($category_id)->exists();
     }
 }

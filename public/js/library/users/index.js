@@ -51,6 +51,37 @@ function deleteItem(url, element) {
     });
 }
 
+$(document).on('click', '.pagination a', function (event) {
+    $(this).find('li').removeClass('active');
+    $(this).parent('li').addClass('active');
+    event.preventDefault();
+    var page = $(this).attr('href').split('page=')[1];
+
+    $("#mainTable").empty().html(`
+    <div class="row container">
+        <div class="text-center" style="margin: 1rem 0.5rem;font-size: 1.5rem;">
+            <span class="text">درحال دریافت  اطلاعات ، لطفا شکیبا باشید .... </span>
+            <span class="spinner spinner-border spinner-border-sm align-middle ms-2" style="display:inline-block"></span>
+        </div>
+    </div>`
+    );
+
+    search(page);
+});
+
+$(document).on('keyup', '#search_input', function (event) {
+    $("#mainTable").empty().html(`
+        <div class="row container">
+            <div class="text-center" style="margin: 1rem 0.5rem;font-size: 1.5rem;">
+                <span class="text">درحال دریافت  اطلاعات ، لطفا شکیبا باشید .... </span>
+                <span class="spinner spinner-border spinner-border-sm align-middle ms-2" style="display:inline-block"></span>
+            </div>
+        </div>`
+    );
+    search(1);
+    // }
+});
+
 reserve_dialog.find('.modal-footer').find('button').click(function () {
     reserve_dialog.modal('hide');
 });
@@ -70,11 +101,10 @@ reserve_dialog.find('.pagination a').on('click', function (event) {
     </div>`
     );
 
-    search(page);
+    bookSearch(page);
 });
 
 $(document).on('keyup', reserve_dialog.find('#search_input_modal'), function (event) {
-    // if ($(this).val().length >= 3) {
     reserve_dialog.find("#table").empty().html(`
         <div class="row container">
             <div class="text-center" style="margin: 1rem 0.5rem;font-size: 1.5rem;">
@@ -137,4 +167,23 @@ function bookSearch(page) {
             console.log(e);
         }
     });
+}
+function search(page) {
+    var word = $('#search_input').val();
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': token
+        },
+        type: 'post',
+        url: users_search_url + '?page=' + page,
+        data: { 'word': word },
+        success: function (data) {
+            $('#mainTable').html(data);
+            KTMenu.createInstances();
+        },
+        error: function (e) {
+            console.log(e);
+        }
+    });
+
 }

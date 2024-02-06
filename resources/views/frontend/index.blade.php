@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title')
-پنل کاربری : {{ Auth::user()->getFullName() }}
+    پنل کاربری : {{ Auth::user()->getFullName() }}
 @endsection
 @section('style')
     <style>
@@ -10,11 +10,11 @@
             height: 14rem;
         }
 
-        .card {
+        .card-first {
             transition: transform .5s;
         }
 
-        .card:hover {
+        .card-first:hover {
             transform: scale(1.02);
             box-shadow: 10px;
         }
@@ -27,10 +27,84 @@
             border-bottom-left-radius: 0.625rem;
             border-bottom-right-radius: 0.625rem;
         }
+
+        #exit {
+            cursor: pointer;
+        }
     </style>
 @endsection
 @section('content')
-    <div class="row">
+    <div class="row mt-4">
+        <div class="col-6">
+            <a href="{{ route('panel.books.index') }}">
+                <div class="card p-5">
+                    <div class="ms-4 row">
+                        <img src="{{ asset('images/icons/book-search.svg') }}" class="w-50px" alt="" srcset="">
+                        <span class="fs-3 fw-bold mt-auto" style="width: fit-content">جستجوی کتاب</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="{{ route('panel.reserves.index') }}">
+                <div class="card p-5">
+                    <div class="ms-4 row">
+                        <img src="{{ asset('images/icons/reserve-history.svg') }}" class="w-50px" alt=""
+                            srcset="">
+                        <span class="fs-3 fw-bold mt-auto" style="width: fit-content">تاریخچه رزرو</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-6">
+            <a href="{{ route('contact') }}">
+                <div class="card p-5">
+                    <div class="ms-4 row">
+                        <img src="{{ asset('images/icons/contact_us.svg') }}" class="w-50px" alt="" srcset="">
+                        <span class="fs-3 fw-bold mt-auto" style="width: fit-content">تماس با ما</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="{{ route('about') }}">
+                <div class="card p-5">
+                    <div class="ms-4 row">
+                        <img src="{{ asset('images/icons/about.svg') }}" class="w-50px" alt="" srcset="">
+                        <span class="fs-3 fw-bold mt-auto" style="width: fit-content">درباره ما</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-6">
+            <a href="{{ route('myProfile.index') }}">
+                <div class="card p-5">
+                    <div class="ms-4 row">
+                        <img src="{{ asset('images/icons/profile.svg') }}" class="w-50px" alt="" srcset="">
+                        <span class="fs-3 fw-bold mt-auto" style="width: fit-content">ویرایش اطلاعات پروفایل</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6">
+            <a id="exit">
+                <form id="exitForm" method="post" action="{{ route('logout') }}">
+                    @csrf
+                </form>
+                <div class="card p-5">
+                    <div class="ms-4 row">
+                        <img src="{{ asset('images/icons/exit.svg') }}" class="w-50px" alt="" srcset="">
+                        <span class="fs-3 fw-bold mt-auto" style="width: fit-content">خروج از سامانه</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    {{-- <div class="row">
         <div class="col-4">
             <div class="card shadow-sm">
                 <a href="{{ route('panel.books.index') }}">
@@ -45,7 +119,7 @@
         </div>
         <div class="col-4">
             <div class="card shadow-sm">
-                <a href="">
+                <a href="{{ route('panel.reserves.index') }}">
                     <div class="card-body img-item m-8"
                         style="background-image: url({{ asset('images/icons/reserve2.svg') }});">
                     </div>
@@ -109,7 +183,7 @@
                 </a>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 @section('script')
     <script src="{{ asset('js/customize/frontend/index.js') }}"></script>

@@ -11,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable , SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -50,7 +50,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function getFullname(){
+    public function getFullname()
+    {
         return $this->name . ' ' . $this->family;
     }
 
@@ -75,5 +76,10 @@ class User extends Authenticatable
     public function getExpireDate()
     {
         return verta($this->expire_date)->formatDate();
+    }
+
+    public function reserves()
+    {
+        return $this->hasMany(Reserve::class, 'user_id');
     }
 }

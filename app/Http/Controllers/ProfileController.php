@@ -41,7 +41,15 @@ class ProfileController extends Controller
     {
         try {
             $user = User::find(Auth::id());
-            $data = ($request->password == null)? $request->except(['password' , 'confirmPassword' , '_token']):$request->except('_token');
+            $data = ($request->password == null) ? $request->except(['password', 'confirmPassword', '_token']) : $request->except('_token');
+            if ($request->has('pic')) {
+                $image = $request->file('pic');
+                $image_path = public_path('images/users/');
+                if (file_exists($image_path . Auth::id() . '.png'))
+                    unlink($image_path . Auth::id() . '.png');
+                $image->move($image_path, Auth::id() . '.png');
+                $data['pic'] = Auth::id() . '.png';
+            }
             $user->update($data);
             Session::put('status', ['status' => 200, 'message' => 'اطلاعات پروفایل باموفقیت ویرایش شد']);
             return redirect()->back();

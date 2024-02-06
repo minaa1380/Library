@@ -7,7 +7,7 @@
                     <span class="svg-icon svg-icon-1 me-2">
                         <i class="fas fa-user-plus"></i>
                     </span>
-                    <h2>افزودن محصول جدید</h2>
+                    <h2>افزودن کاربر جدید</h2>
                 </div>
             </div>
             <div class="card-body pt-5">
