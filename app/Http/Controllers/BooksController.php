@@ -126,12 +126,24 @@ class BooksController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
-            Book::find($id)->delete();
-            return response()->json(['status' => 200, 'message' => 'کتاب باموفقیت حذف شد .']);
-        } catch (QueryException $exception) {
-            return response()->json(['status' => 201, 'message' => 'خطا در حذف کتاب ، مجددا تلاش کنید .']);
-        }
+        if ($this->checkBookReserved($id)) {
+            try {
+                Book::find($id)->delete();
+                return response()->json(['status' => 200, 'message' => 'کتاب باموفقیت حذف شد .']);
+            } catch (QueryException $exception) {
+                return response()->json(['status' => 201, 'message' => 'خطا در حذف کتاب ، مجددا تلاش کنید .']);
+            }
+        } else
+            return response()->json(['status' => 202, 'message' => 'کتاب در دست امانت است !']);
+    }
+
+    private function checkBookReserved($id)
+    {
+        $book = Book::find($id);
+        if ($book)
+            if ($book->status == 0)
+                return true;
+        return false;
     }
 
     public function search(Request $request)
@@ -146,7 +158,7 @@ class BooksController extends Controller
     }
 
     public function reserve($id)
-    {        
+    {
         $check = $this->checkBook($id);
         if ($check['status'] == 200) {
             $data = [

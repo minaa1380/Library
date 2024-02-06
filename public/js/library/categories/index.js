@@ -89,6 +89,13 @@ $(document).ready(function () {
                         confirmButtonColor: "#3085d6",
                         confirmButtonText: "باشه",
                     })
+                } else {
+                    Swal.fire({
+                        text: data.message,
+                        icon: "warning",
+                        confirmButtonColor: "#0000FF",
+                        confirmButtonText: "اوکی!",
+                    })
                 }
             },
             error: function (t) {
