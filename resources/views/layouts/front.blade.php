@@ -19,8 +19,8 @@
 @endphp
 
 <body style="direction: rtl">
-    <div class="container container-fluid">
-        <div class="card mt-10 mb-3">
+    <div class="container container-fluid" style="padding-bottom: 120px">
+        <div class="card card-first mt-10 mb-3">
             <div class="container-fluid p-3 m-auto">
                 <div class="row">
                     <div class="col-4 d-flex align-items-center ps-5">
@@ -49,6 +49,10 @@
         </div>
 
         @yield('content')
+    </div>
+
+    <div style="max-height: 90px">
+        @include('layouts.footer')
     </div>
 
     <script src="{{ asset('plugins/global/plugins.bundle.js') }}"></script>

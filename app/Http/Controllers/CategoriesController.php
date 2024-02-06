@@ -7,6 +7,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class CategoriesController extends Controller
 {
@@ -59,5 +60,14 @@ class CategoriesController extends Controller
         if (Category::find($id)->delete())
             return response()->json(['status' => 200, 'message' => 'دسته بندی باموفقیت حذف شد.']);
         return response()->json(['status' => 201, 'message' => 'خطا در حذف دسته بندی ، مجددا تلاش کنید..']);
+    }
+
+    public function search(Request $request)
+    {
+        $query = Category::query();
+        if ($request->has('word'))
+            $query = $query->where('title', 'like', '%' . $request->word . '%')->where('id', '>', 1);
+        $categories = $query->paginate(20);
+        return view('backend.categories.partial', compact('categories'));
     }
 }

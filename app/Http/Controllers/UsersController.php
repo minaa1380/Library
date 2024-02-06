@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Models\Reserve;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
@@ -116,6 +118,62 @@ class UsersController extends Controller
             ->orWhere('family', 'like', '%' . $request->word . '%')
             ->orWhere('membershipID', 'like', '%' . $request->word . '%')
             ->get();
+    }
+    public function search(Request $request)
+    {
+        $users = User::orWhere('name', 'like', '%' . $request->word . '%')
+            ->orWhere('family', 'like', '%' . $request->word . '%')
+            ->orWhere('membershipID', 'like', '%' . $request->word . '%')
+            ->paginate(20);
+
+        if ($request->has('isBookPage'))
+            return view('backend.books.users_partial', compact('users'));
+        return view('backend.users.partial', compact('users'));
+    }
+
+    public function reserve(Request $request)
+    {
+        $check = $this->checkBook($request->book_id);
+        if ($check['status'] == 200) {
+            $data = [
+                'user_id' => $request->user_id,
+                'book_id' => $request->book_id,
+                'reserve_date' => Carbon::now(),
+                'period' => 7
+            ];
+            if ($this->createReserve($data))
+                return response()->json(['status' => 200, 'message' => 'کتاب باموفقیت رزرو شد .']);
+            return response()->json(['status' => 201, 'message' => 'خطا رد رزرو کتاب ، مجددا تلاش کنید .']);
+        }
+        return response()->json($check);
+    }
+
+    private function createReserve($data)
+    {
+        try {
+            Reserve::create($data);
+            Book::find($data['book_id'])->update(['status' => 1]);
+            return true;
+        } catch (QueryException $th) {
+            return $th->getMessage();
+        }
+    }
+    private function checkBook($book_id)
+    {
+        $book = Book::find($book_id);
+        if ($book) {
+            // check book exists
+            if ($book->inventory > 0) {
+                // check book status
+                if ($book->status == 0)
+                    return ['status' => 200, 'message' => 'ok'];
+                return ['status' => 201, 'message' => 'کتاب در دست امانت میباشد.'];
+            }
+            return ['status' => 202, 'message' => 'کتاب موردنظر موجود نمیباشد.'];
+        }
+        return ['status' => 203, 'message' => 'شناسه کتاب موجود نمیباشد .'];
+
+        // check book exists
     }
 
     private function generateMembershipID()

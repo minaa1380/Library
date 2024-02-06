@@ -139,17 +139,20 @@ class BooksController extends Controller
         $word = $request->word;
         $books = Book::orWhere('title', 'like', '%' . $word . '%')
             ->orWhere('barcode', 'like', '%' . $word . '%')->paginate(20);
+
+        if ($request->has('isBookPage'))
+            return view('backend.books.partial', compact('books'));
         return view('backend.users.books_partial', compact('books'));
     }
 
     public function reserve($id)
-    {
+    {        
         $check = $this->checkBook($id);
         if ($check['status'] == 200) {
             $data = [
                 'user_id' => Auth::id(),
                 'book_id' => $id,
-                'reserve_date' => Carbon::now() ,
+                'reserve_date' => Carbon::now(),
                 'period' => 7
             ];
             if ($this->createReserve($data))

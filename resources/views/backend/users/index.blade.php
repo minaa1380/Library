@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="card-body pt-0">
-                    <div id="table">
+                    <div id="mainTable">
                         @include('backend.users.partial')
                     </div>
                 </div>
@@ -100,6 +100,7 @@
     <script>
         let token = "{{ csrf_token() }}";
         let book_search_url = "{{ route('books.search') }}";
+        let users_search_url = "{{ route('users.search') }}";
         main_id = 5, sub_id = 1;
 
         @if (Session::exists('status'))
